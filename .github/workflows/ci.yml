@@ -1,0 +1,33 @@
+name: Primeiro teste GitHub Actions
+
+on: 
+  push: 
+    branches:
+      - main
+
+jobs:
+  teste:
+    name: Rodar testes
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Baixa o código do repositório para a máquina do GitHub
+      - name: Checkout do repositorio
+        uses: actions/checkout@v4
+
+    # 2. Instala e configura a versão do Python
+      - name: Setup do Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+    # 3. Instala as dependências (como o pytest)
+      - name: Instala dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt 
+          
+    # 4. Executa os testes da calculadora
+      - name: Run tests with pytest
+        run: |
+          pytest
